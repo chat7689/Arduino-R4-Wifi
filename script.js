@@ -5,13 +5,21 @@ async function loadData() {
     const res = await fetch(FIREBASE_URL);
     const data = await res.json();
 
-    document.getElementById("temp").textContent = data?.message ?? "No data";
-    document.getElementById("last").textContent = "—"; // no timestamp
+    // Show Arduino message
+    document.getElementById("message").textContent = data?.message ?? "No data";
+
+    // Show time of last update
+    document.getElementById("last").textContent = new Date().toLocaleTimeString();
+
   } catch (err) {
     console.error(err);
-    document.getElementById("temp").textContent = "Error";
+    document.getElementById("message").textContent = "Error fetching data";
+    document.getElementById("last").textContent = "—";
   }
 }
 
+// Initial load
 loadData();
+
+// Refresh every 2 seconds
 setInterval(loadData, 2000);
