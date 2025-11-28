@@ -1,36 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Arduino R4 WiFi — Live Data</title>
+  <title>Arduino R4 Distance</title>
   <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      text-align: center; 
-      margin-top: 50px; 
-      background-color: #f0f0f0; 
-      color: #333;
-    }
-    #message { 
-      font-weight: bold; 
-      font-size: 1.5em; 
-      margin-top: 20px;
-      color: #007acc;
-    }
-    #last { 
-      color: gray; 
-      margin-top: 10px; 
-    }
-    h1 {
-      color: #222;
-    }
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    h1 { color: #333; }
+    p { font-size: 24px; }
   </style>
 </head>
 <body>
-  <h1>Arduino R4 WiFi — Live Data</h1>
-  <p>Message: <span id="message">Loading...</span></p>
-  <p>Last updated: <span id="last">—</span></p>
+  <h1>Ultrasonic Sensor Live Distance</h1>
+  <p>Distance: <span id="distance">--</span> cm</p>
 
-  <script src="script.js"></script>
+  <script>
+    const FIREBASE_URL = "https://arduino-r4-wifi-default-rtdb.firebaseio.com/distance.json";
+
+    async function updateDistance() {
+      try {
+        const res = await fetch(FIREBASE_URL);
+        const data = await res.json();
+        document.getElementById("distance").textContent = data?.distance ?? "--";
+      } catch (err) {
+        document.getElementById("distance").textContent = "Error";
+      }
+    }
+
+    updateDistance();
+    setInterval(updateDistance, 1000);
+  </script>
 </body>
 </html>
