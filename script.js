@@ -5,9 +5,8 @@ async function loadData() {
     const res = await fetch(FIREBASE_URL);
     const data = await res.json();
 
-    document.getElementById("temp").textContent = data?.temperature ?? "No data";
-    const t = data?.timestamp ? new Date(data.timestamp).toLocaleString() : "—";
-    document.getElementById("last").textContent = t;
+    document.getElementById("temp").textContent = data?.message ?? "No data";
+    document.getElementById("last").textContent = "—"; // no timestamp
   } catch (err) {
     console.error(err);
     document.getElementById("temp").textContent = "Error";
