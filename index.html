@@ -1,17 +1,36 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Arduino R4 Live Data</title>
+  <meta charset="UTF-8">
+  <title>Arduino R4 WiFi — Live Data</title>
   <style>
-    body { font-family: Arial; padding: 20px; max-width: 700px; margin: auto; }
-    .value { font-size: 2rem; font-weight: bold; }
+    body { 
+      font-family: Arial, sans-serif; 
+      text-align: center; 
+      margin-top: 50px; 
+      background-color: #f0f0f0; 
+      color: #333;
+    }
+    #message { 
+      font-weight: bold; 
+      font-size: 1.5em; 
+      margin-top: 20px;
+      color: #007acc;
+    }
+    #last { 
+      color: gray; 
+      margin-top: 10px; 
+    }
+    h1 {
+      color: #222;
+    }
   </style>
 </head>
 <body>
   <h1>Arduino R4 WiFi — Live Data</h1>
-  <p>Temperature: <span id="temp" class="value">—</span> °C</p>
+  <p>Message: <span id="message">Loading...</span></p>
   <p>Last updated: <span id="last">—</span></p>
+
   <script src="script.js"></script>
 </body>
 </html>
