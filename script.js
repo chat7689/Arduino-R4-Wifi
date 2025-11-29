@@ -1,25 +1,29 @@
-const FIREBASE_URL = "https://arduino-r4-wifi-default-rtdb.firebaseio.com/arduino.json";
+// Firebase Realtime Database URL
+const FIREBASE_DB_URL = "https://arduino-r4-wifi-default-rtdb.firebaseio.com/lcd/text.json";
 
-async function loadData() {
+const sendBtn = document.getElementById("sendBtn");
+const lcdInput = document.getElementById("lcdMessage");
+const statusEl = document.getElementById("status");
+
+sendBtn.addEventListener("click", async () => {
+  const text = lcdInput.value || "";
+  const trimmed = text.substring(0, 32); // limit to 32 chars
+
+  statusEl.textContent = "Sending...";
+
   try {
-    const res = await fetch(FIREBASE_URL);
-    const data = await res.json();
+    const response = await fetch(FIREBASE_DB_URL, {
+      method: "PUT",  // replaces the value at /lcd/text
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(trimmed)
+    });
 
-    // Show Arduino message
-    document.getElementById("message").textContent = data?.message ?? "No data";
+    if (!response.ok) throw new Error("HTTP " + response.status);
 
-    // Show time of last update
-    document.getElementById("last").textContent = new Date().toLocaleTimeString();
-
+    statusEl.textContent = `Sent: "${trimmed}"`;
+    console.log("Sent to LCD:", trimmed);
   } catch (err) {
+    statusEl.textContent = "Error sending message!";
     console.error(err);
-    document.getElementById("message").textContent = "Error fetching data";
-    document.getElementById("last").textContent = "—";
   }
-}
-
-// Initial load
-loadData();
-
-// Refresh every 2 seconds
-setInterval(loadData, 2000);
+});
