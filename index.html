@@ -1,81 +1,41 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Arduino LCD — Live (v2)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0f1720; --card:#111827; --muted:#9ca3af; --accent:#60a5fa;
-    --lcd-bg:#07121a; --lcd-text:#bfe7ff;
-  }
-  body{font-family:Inter,system-ui,Arial; background:linear-gradient(180deg,#08101a 0%, #07121a 100%); color:#e6eef6; margin:0; padding:28px; display:flex; justify-content:center}
-  .wrap{width:100%; max-width:900px}
-  header{display:flex; align-items:center; gap:16px; margin-bottom:18px}
-  h1{margin:0;font-weight:600}
-  .grid{display:grid; grid-template-columns: 1fr 360px; gap:18px}
-  .card{background:var(--card); border-radius:12px; padding:16px; box-shadow:0 6px 18px rgba(2,6,23,0.6)}
-  label{display:block; color:var(--muted); margin-bottom:8px; font-size:14px}
-  .controls{display:flex; gap:10px; align-items:center}
-  input[type="text"]{flex:1; padding:10px 12px; font-size:16px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:#0b1220; color:#e6eef6}
-  button{background:var(--accent); color:#031026; border:none; padding:10px 14px; border-radius:8px; font-weight:600; cursor:pointer}
-  button:active{transform:translateY(1px)}
-  .status{margin-top:10px; font-size:14px; color:var(--muted)}
-  .lcd-preview{background:linear-gradient(180deg,#021018, #041426); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:8px}
-  .virtual-lcd{background:var(--lcd-bg); border-radius:6px; padding:12px; color:var(--lcd-text); font-family:monospace; letter-spacing:1px; min-height:60px; display:flex; flex-direction:column; justify-content:center}
-  .lcd-line{height:1.2em; white-space:pre; overflow:hidden}
-  .small{font-size:13px; color:var(--muted)}
-  .meta{display:flex; justify-content:space-between; gap:8px; align-items:center}
-  .indicator{display:inline-block; width:10px; height:10px; border-radius:50%}
-  .online{background:#34d399; box-shadow:0 0 8px rgba(52,211,153,0.12)}
-  .offline{background:#f87171}
-  .footer{margin-top:12px; font-size:13px; color:var(--muted)}
-  @media(max-width:860px){ .grid{grid-template-columns:1fr} .card{padding:12px} .virtual-lcd{min-height:80px} }
-</style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <h1>Arduino LCD — Live (v2)</h1>
-      <div style="margin-left:auto" class="small">Smart-Live (150ms debounce)</div>
-    </header>
+const FIREBASE_URL = "https://arduino-r4-wifi-default-rtdb.firebaseio.com/lcd/text.json";
 
-    <div class="grid">
-      <div class="card">
-        <label for="lcdMessage">Type message (max 32 chars)</label>
-        <div class="controls">
-          <input id="lcdMessage" type="text" maxlength="32" placeholder="Type here — updates after pause">
-          <button id="sendNow">Send Now</button>
-        </div>
+const input = document.getElementById("textInput");
+const statusDot = document.getElementById("statusDot");
+const statusText = document.getElementById("statusText");
 
-        <div class="status" id="status">Status: <span id="statusText">Idle</span></div>
+let typingTimer;
+const TYPING_DELAY = 150; // Smart-Live delay
 
-        <div style="margin-top:14px" class="small">Preview (virtual LCD)</div>
-        <div class="lcd-preview" style="margin-top:8px">
-          <div class="virtual-lcd" id="virtualLCD">
-            <div class="lcd-line" id="vline1">&nbsp;</div>
-            <div class="lcd-line" id="vline2">&nbsp;</div>
-          </div>
-          <div class="meta">
-            <div class="small">Device: <span id="deviceIP">unknown</span></div>
-            <div class="small">Status: <span id="onlineDot" class="indicator offline"></span> <span id="onlineText">offline</span></div>
-          </div>
-          <div class="footer">Auto-updates when you pause typing. Use "Send Now" to force immediate push.</div>
-        </div>
-      </div>
+function updateStatus(color, text) {
+  statusDot.style.background = color;
+  statusText.textContent = text;
+}
 
-      <div class="card">
-        <div style="display:flex; flex-direction:column; gap:10px">
-          <div><strong>Current LCD Text</strong></div>
-          <div id="currentText" style="font-family:monospace; padding:10px; background:#06121a; border-radius:6px; min-height:72px; color:var(--lcd-text)"></div>
-          <div class="small">Last updated: <span id="lastUpdated">—</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
+// Trigger live updates
+input.addEventListener("input", () => {
+  updateStatus("#f1c40f", "Typing...");
+  clearTimeout(typingTimer);
 
-<script src="script.js"></script>
-</body>
-</html>
+  typingTimer = setTimeout(() => {
+    sendToFirebase(input.value);
+  }, TYPING_DELAY);
+});
+
+// Upload text to Firebase
+function sendToFirebase(text) {
+  updateStatus("#2a84ff", "Sending...");
+
+  fetch(FIREBASE_URL, {
+    method: "PUT",
+    body: JSON.stringify(text)
+  })
+  .then(r => r.text())
+  .then(() => {
+    updateStatus("#2ecc71", "Live");
+    setTimeout(() => updateStatus("#2a84ff", "Idle"), 400);
+  })
+  .catch(() => {
+    updateStatus("#e74c3c", "Error");
+  });
+}
