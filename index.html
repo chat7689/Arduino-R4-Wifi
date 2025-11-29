@@ -5,24 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arduino LCD Controller</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 30px; max-width: 600px; margin: auto; }
-    input[type=text] { width: 100%; padding: 10px; font-size: 18px; margin-bottom: 10px; }
-    button { padding: 10px 20px; font-size: 18px; }
-    #status { margin-top: 15px; color: #333; }
-    #currentText { margin-top: 20px; font-size: 20px; font-weight: bold; }
+    body { font-family: Arial; max-width: 600px; margin: 30px auto; }
+    input[type=text] { width: 100%; padding: 10px; font-size: 18px; }
+    button { padding: 10px 20px; font-size: 18px; margin-top: 10px; }
+    #status { margin-top: 10px; color: #333; }
+    #currentText { font-weight: bold; font-size: 20px; margin-top: 20px; }
   </style>
 </head>
 <body>
   <h1>Arduino LCD Controller</h1>
-  <p>Type a message (max 32 characters) and click "Send".</p>
-
-  <input type="text" id="lcdMessage" maxlength="32" placeholder="Hello Arduino!" />
+  <input type="text" id="lcdMessage" maxlength="32" placeholder="Hello Arduino!">
   <button id="sendBtn">Send</button>
   <div id="status"></div>
-
   <h3>Current LCD Text:</h3>
   <div id="currentText">Loading...</div>
-
   <script src="script.js"></script>
 </body>
 </html>
