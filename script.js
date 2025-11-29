@@ -1,41 +1,44 @@
-const FIREBASE_URL = "https://arduino-r4-wifi-default-rtdb.firebaseio.com/lcd/text.json";
+const FIREBASE_DB_URL = "https://arduino-r4-wifi-default-rtdb.firebaseio.com/lcd/text.json";
 
-const input = document.getElementById("textInput");
-const statusDot = document.getElementById("statusDot");
-const statusText = document.getElementById("statusText");
+const sendButton = document.getElementById("sendButton");
+const lcdInput = document.getElementById("lcdInput");
+const statusDisplay = document.getElementById("statusDisplay");
+const currentLCDText = document.getElementById("currentLCDText");
 
-let sendTimeout;
-const DELAY = 120; // delay before sending update
-
-function setStatus(color, text) {
-  statusDot.style.backgroundColor = color;
-  statusText.textContent = text;
+async function sendToLCD(text) {
+  const trimmed = text.substring(0, 32);
+  statusDisplay.textContent = "Sending...";
+  try {
+    const response = await fetch(FIREBASE_DB_URL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(trimmed)
+    });
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    statusDisplay.textContent = `Sent: "${trimmed}"`;
+    lcdInput.value = "";
+  } catch(err) {
+    statusDisplay.textContent = "Error sending message";
+    console.error(err);
+  }
 }
 
-// Trigger live updates
-input.addEventListener("input", () => {
-  setStatus("#f1c40f", "Typing…");
-  clearTimeout(sendTimeout);
+async function updateCurrentText() {
+  try {
+    const response = await fetch(FIREBASE_DB_URL);
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    const text = await response.json();
+    currentLCDText.textContent = text || "";
+  } catch(err) {
+    currentLCDText.textContent = "Error loading text";
+    console.error(err);
+  }
+}
 
-  sendTimeout = setTimeout(() => {
-    sendToFirebase(input.value);
-  }, DELAY);
+sendButton.addEventListener("click", () => {
+  const msg = lcdInput.value;
+  if (msg.length > 0) sendToLCD(msg);
 });
 
-// Upload text to Firebase
-function sendToFirebase(text) {
-  setStatus("#3498db", "Sending…");
-
-  fetch(FIREBASE_URL, {
-    method: "PUT",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(text.trim())
-  })
-  .then(() => {
-    setStatus("#2ecc71", "Live");
-    setTimeout(() => setStatus("#95a5a6", "Idle"), 500);
-  })
-  .catch(() => {
-    setStatus("#e74c3c", "Error");
-  });
-}
+setInterval(updateCurrentText, 2000);
+updateCurrentText();
