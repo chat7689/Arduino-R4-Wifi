@@ -5,13 +5,14 @@ const statusDot = document.getElementById("statusDot");
 const statusText = document.getElementById("statusText");
 
 let sendTimeout;
-const DELAY = 120; // small delay so Firebase isn't spammed
+const DELAY = 120; // delay before sending update
 
 function setStatus(color, text) {
   statusDot.style.backgroundColor = color;
   statusText.textContent = text;
 }
 
+// Trigger live updates
 input.addEventListener("input", () => {
   setStatus("#f1c40f", "Typing…");
   clearTimeout(sendTimeout);
@@ -21,6 +22,7 @@ input.addEventListener("input", () => {
   }, DELAY);
 });
 
+// Upload text to Firebase
 function sendToFirebase(text) {
   setStatus("#3498db", "Sending…");
 
