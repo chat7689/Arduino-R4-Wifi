@@ -1,51 +1,24 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Send to Arduino LCD</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arduino LCD Controller</title>
   <style>
-    body { font-family: system-ui, Arial; padding: 24px; max-width:700px; margin:auto; }
-    input[type=text] { width: 100%; font-size:18px; padding:8px; }
-    button { font-size:18px; padding:8px 12px; margin-top:8px; }
-    .status { margin-top:12px; color: #333; }
+    body { font-family: Arial, sans-serif; padding: 30px; max-width: 600px; margin: auto; }
+    input[type=text] { width: 100%; padding: 10px; font-size: 18px; }
+    button { padding: 10px 20px; font-size: 18px; margin-top: 10px; }
+    #status { margin-top: 15px; color: #333; }
   </style>
 </head>
 <body>
-  <h1>Send to Arduino LCD</h1>
-  <p>Type a message (max 32 chars) and press <strong>Send</strong>.</p>
+  <h1>Arduino LCD Controller</h1>
+  <p>Type a message (max 32 characters) and click "Send".</p>
 
-  <input id="msg" type="text" maxlength="32" placeholder="Hello, Arduino!" />
-  <button id="send">Send</button>
+  <input type="text" id="lcdMessage" maxlength="32" placeholder="Hello Arduino!" />
+  <button id="sendBtn">Send</button>
+  <div id="status"></div>
 
-  <div class="status" id="status"></div>
-
-<script>
-const DB_URL = "https://YOUR-PROJECT-ID-default-rtdb.firebaseio.com"; // <-- REPLACE this
-const PATH = "/lcd/text.json"; // full endpoint will be DB_URL + PATH
-
-const statusEl = document.getElementById('status');
-const input = document.getElementById('msg');
-const btn = document.getElementById('send');
-
-btn.onclick = async () => {
-  const text = input.value || "";
-  // optional: limit length
-  const trimmed = text.substring(0, 32);
-  try {
-    statusEl.textContent = 'Sending…';
-    const res = await fetch(DB_URL + PATH, {
-      method: 'PUT', // replace the value at /lcd/text
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(trimmed)
-    });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    statusEl.textContent = 'Sent: "' + trimmed + '"';
-  } catch (err) {
-    statusEl.textContent = 'Error: ' + err;
-    console.error(err);
-  }
-};
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
