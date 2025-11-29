@@ -6,9 +6,10 @@
   <title>Arduino LCD Controller</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 30px; max-width: 600px; margin: auto; }
-    input[type=text] { width: 100%; padding: 10px; font-size: 18px; }
-    button { padding: 10px 20px; font-size: 18px; margin-top: 10px; }
+    input[type=text] { width: 100%; padding: 10px; font-size: 18px; margin-bottom: 10px; }
+    button { padding: 10px 20px; font-size: 18px; }
     #status { margin-top: 15px; color: #333; }
+    #currentText { margin-top: 20px; font-size: 20px; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -18,6 +19,9 @@
   <input type="text" id="lcdMessage" maxlength="32" placeholder="Hello Arduino!" />
   <button id="sendBtn">Send</button>
   <div id="status"></div>
+
+  <h3>Current LCD Text:</h3>
+  <div id="currentText">Loading...</div>
 
   <script src="script.js"></script>
 </body>
