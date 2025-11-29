@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("textInput");
   const statusDot = document.getElementById("statusDot");
   const statusText = document.getElementById("statusText");
+  const currentLCDText = document.getElementById("currentLCDText");
 
   let typingTimer;
   const TYPING_DELAY = 150; // Live update delay
@@ -12,16 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     statusDot.style.background = color;
     statusText.textContent = text;
   }
-
-  // Live updates while typing
-  input.addEventListener("input", () => {
-    updateStatus("#f1c40f", "Typing...");
-    clearTimeout(typingTimer);
-
-    typingTimer = setTimeout(() => {
-      sendToFirebase(input.value);
-    }, TYPING_DELAY);
-  });
 
   function sendToFirebase(text) {
     updateStatus("#2a84ff", "Sending...");
@@ -40,4 +31,28 @@ document.addEventListener("DOMContentLoaded", () => {
       updateStatus("#e74c3c", "Error");
     });
   }
+
+  input.addEventListener("input", () => {
+    updateStatus("#f1c40f", "Typing...");
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => {
+      sendToFirebase(input.value);
+    }, TYPING_DELAY);
+  });
+
+  // Poll Firebase every 500ms to update current LCD text live
+  async function updateCurrentText() {
+    try {
+      const response = await fetch(FIREBASE_URL);
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      const text = await response.json();
+      currentLCDText.textContent = text || "";
+    } catch(err) {
+      currentLCDText.textContent = "Error loading text";
+      console.error(err);
+    }
+  }
+
+  setInterval(updateCurrentText, 500);
+  updateCurrentText();
 });
