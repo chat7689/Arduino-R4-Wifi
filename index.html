@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arduino LCD Controller</title>
+  <title>Arduino LCD Control Panel</title>
   <style>
-    body { font-family: Arial; max-width: 600px; margin: 30px auto; }
-    input[type=text] { width: 100%; padding: 10px; font-size: 18px; }
-    button { padding: 10px 20px; font-size: 18px; margin-top: 10px; }
-    #status { margin-top: 10px; color: #333; }
-    #currentText { font-weight: bold; font-size: 20px; margin-top: 20px; }
+    body { font-family: Verdana, sans-serif; max-width: 600px; margin: 30px auto; }
+    input[type=text] { width: 100%; padding: 12px; font-size: 18px; }
+    button { padding: 10px 22px; font-size: 18px; margin-top: 12px; }
+    #statusDisplay { margin-top: 10px; color: #333; }
+    #currentLCDText { font-weight: bold; font-size: 20px; margin-top: 20px; }
   </style>
 </head>
 <body>
   <h1>Arduino LCD Controller</h1>
-  <input type="text" id="lcdMessage" maxlength="32" placeholder="Hello Arduino!">
-  <button id="sendBtn">Send</button>
-  <div id="status"></div>
+  <input type="text" id="lcdInput" maxlength="32" placeholder="Type message for Arduino">
+  <button id="sendButton">Send</button>
+  <div id="statusDisplay"></div>
   <h3>Current LCD Text:</h3>
-  <div id="currentText">Loading...</div>
+  <div id="currentLCDText">Loading...</div>
   <script src="script.js"></script>
 </body>
 </html>
