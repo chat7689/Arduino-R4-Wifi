@@ -4,38 +4,36 @@ const input = document.getElementById("textInput");
 const statusDot = document.getElementById("statusDot");
 const statusText = document.getElementById("statusText");
 
-let typingTimer;
-const TYPING_DELAY = 150; // Smart-Live delay
+let sendTimeout;
+const DELAY = 120; // small delay so Firebase isn't spammed
 
-function updateStatus(color, text) {
-  statusDot.style.background = color;
+function setStatus(color, text) {
+  statusDot.style.backgroundColor = color;
   statusText.textContent = text;
 }
 
-// Trigger live updates
 input.addEventListener("input", () => {
-  updateStatus("#f1c40f", "Typing...");
-  clearTimeout(typingTimer);
+  setStatus("#f1c40f", "Typing…");
+  clearTimeout(sendTimeout);
 
-  typingTimer = setTimeout(() => {
+  sendTimeout = setTimeout(() => {
     sendToFirebase(input.value);
-  }, TYPING_DELAY);
+  }, DELAY);
 });
 
-// Upload text to Firebase
 function sendToFirebase(text) {
-  updateStatus("#2a84ff", "Sending...");
+  setStatus("#3498db", "Sending…");
 
   fetch(FIREBASE_URL, {
     method: "PUT",
-    body: JSON.stringify(text)
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(text.trim())
   })
-  .then(r => r.text())
   .then(() => {
-    updateStatus("#2ecc71", "Live");
-    setTimeout(() => updateStatus("#2a84ff", "Idle"), 400);
+    setStatus("#2ecc71", "Live");
+    setTimeout(() => setStatus("#95a5a6", "Idle"), 500);
   })
   .catch(() => {
-    updateStatus("#e74c3c", "Error");
+    setStatus("#e74c3c", "Error");
   });
 }
