@@ -1,41 +1,85 @@
-const FIREBASE_URL = "https://arduino-r4-wifi-default-rtdb.firebaseio.com/lcd/text.json";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LCD Live Stream</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #121212;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-const input = document.getElementById("textInput");
-const statusDot = document.getElementById("statusDot");
-const statusText = document.getElementById("statusText");
+    #container {
+      width: 90%;
+      max-width: 500px;
+      padding: 20px;
+      border-radius: 15px;
+      background-color: #1f1f1f;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      text-align: center;
+    }
 
-let typingTimer;
-const TYPING_DELAY = 150; // Smart-Live delay
+    #title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
 
-function updateStatus(color, text) {
-  statusDot.style.background = color;
-  statusText.textContent = text;
-}
+    #textInput {
+      width: 100%;
+      padding: 12px;
+      font-size: 20px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: #2a2a2a;
+      color: #fff;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
+    }
 
-// Trigger live updates
-input.addEventListener("input", () => {
-  updateStatus("#f1c40f", "Typing...");
-  clearTimeout(typingTimer);
+    #textInput:focus {
+      background: #333333;
+    }
 
-  typingTimer = setTimeout(() => {
-    sendToFirebase(input.value);
-  }, TYPING_DELAY);
-});
+    #statusWrap {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
 
-// Upload text to Firebase
-function sendToFirebase(text) {
-  updateStatus("#2a84ff", "Sending...");
+    #statusDot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #3498db;
+      transition: background 0.2s;
+    }
 
-  fetch(FIREBASE_URL, {
-    method: "PUT",
-    body: JSON.stringify(text)
-  })
-  .then(r => r.text())
-  .then(() => {
-    updateStatus("#2ecc71", "Live");
-    setTimeout(() => updateStatus("#2a84ff", "Idle"), 400);
-  })
-  .catch(() => {
-    updateStatus("#e74c3c", "Error");
-  });
-}
+    #statusText {
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <div id="title">LCD Live Stream</div>
+  <input id="textInput" type="text" placeholder="Type to update LCD..." />
+  <div id="statusWrap">
+    <div id="statusDot"></div>
+    <div id="statusText">Idle</div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
