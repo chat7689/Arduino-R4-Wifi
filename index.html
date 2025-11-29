@@ -3,13 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arduino LCD Live Control</title>
+  <title>Arduino LCD Live Controller</title>
   <style>
-    body { font-family: Verdana, sans-serif; max-width: 600px; margin: 30px auto; background: #fff; }
-    input[type=text] { width: 100%; padding: 12px; font-size: 18px; }
-    #statusContainer { margin-top: 10px; display: flex; align-items: center; gap: 10px; }
-    #statusDot { width: 15px; height: 15px; border-radius: 50%; background: #2a84ff; }
-    #statusText { font-size: 16px; }
+    body {
+      font-family: Verdana, sans-serif;
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+    }
+    input[type=text] {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      box-sizing: border-box;
+    }
+    #statusContainer {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+    }
+    #statusDot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #2a84ff;
+      margin-right: 10px;
+    }
+    #statusText {
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -20,7 +42,6 @@
     <div id="statusText">Idle</div>
   </div>
 
-  <!-- Script placed at the end of body so elements exist -->
   <script src="script.js"></script>
 </body>
 </html>
