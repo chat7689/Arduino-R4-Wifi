@@ -2,35 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arduino Control Panel</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Arduino R4 Control</h1>
+  <h1>Arduino Control Panel</h1>
 
   <div>
-    <label for="lcdText">LCD Text:</label>
-    <input type="text" id="lcdText" placeholder="Type message">
-    <button onclick="updateLCD()">Update LCD</button>
+    <label>LCD Text:</label>
+    <input type="text" id="lcdText" placeholder="Enter text">
+    <button onclick="updateFirebase('lcd/text', lcdText.value)">Update LCD</button>
   </div>
 
   <div>
-    <label for="servo1">Servo 1 Angle (0-180):</label>
-    <input type="number" id="servo1" min="0" max="180">
-    <button onclick="updateServo1()">Set Servo 1</button>
+    <label>Servo 1 Angle:</label>
+    <input type="number" id="servo1Angle" min="0" max="180" placeholder="0-180">
+    <button onclick="updateFirebase('servo1/angle', servo1Angle.value)">Update Servo1</button>
   </div>
 
   <div>
-    <label for="servo2">Servo 2 Angle (0-180):</label>
-    <input type="number" id="servo2" min="0" max="180">
-    <button onclick="updateServo2()">Set Servo 2</button>
+    <label>Servo 2 Angle:</label>
+    <input type="number" id="servo2Angle" min="0" max="180" placeholder="0-180">
+    <button onclick="updateFirebase('servo2/angle', servo2Angle.value)">Update Servo2</button>
   </div>
 
   <div>
-    <label for="stepper">Stepper Steps:</label>
-    <input type="number" id="stepper">
-    <button onclick="updateStepper()">Set Stepper</button>
+    <label>Stepper Steps:</label>
+    <input type="number" id="stepperSteps" placeholder="Enter steps">
+    <button onclick="updateFirebase('stepper/steps', stepperSteps.value)">Update Stepper</button>
   </div>
 
   <script src="script.js"></script>
