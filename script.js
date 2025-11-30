@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
-// Your Firebase configuration
+// Firebase config (already filled in)
 const firebaseConfig = {
   apiKey: "AIzaSyDXUCyz6oI23ndD03ejKuDj3_V8oK9JLvQ",
   authDomain: "arduino-r4-wifi.firebaseapp.com",
@@ -17,18 +17,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-function updateLCD() {
+// Assign buttons after DOM is loaded
+const lcdBtn = document.getElementById("lcdBtn");
+const stepperBtn = document.getElementById("stepperBtn");
+
+lcdBtn.addEventListener("click", () => {
   const text = document.getElementById("lcdText").value;
   set(ref(db, 'lcd/text'), text)
     .then(() => console.log('lcd/text updated to', text))
     .catch(err => console.error(err));
-}
+});
 
-function updateStepper() {
+stepperBtn.addEventListener("click", () => {
   const steps = parseInt(document.getElementById("stepperSteps").value, 10);
   if (!isNaN(steps)) {
     set(ref(db, 'stepper/steps'), steps)
       .then(() => console.log('stepper/steps updated to', steps))
       .catch(err => console.error(err));
   }
-}
+});
