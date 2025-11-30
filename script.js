@@ -1,3 +1,7 @@
+// Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+
 // Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDXUCyz6oI23ndD03ejKuDj3_V8oK9JLvQ",
@@ -6,31 +10,25 @@ const firebaseConfig = {
   projectId: "arduino-r4-wifi",
   storageBucket: "arduino-r4-wifi.firebasestorage.app",
   messagingSenderId: "100197280714",
-  appId: "1:100197280714:web:a58b8e6a573c70bdd3bd33",
-  measurementId: "G-35X2XRQ3WQ"
+  appId: "1:100197280714:web:a58b8e6a573c70bdd3bd33"
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-// Update functions
 function updateLCD() {
-  const val = document.getElementById("lcdText").value;
-  db.ref("lcd/text").set(val); // no quotes added, Arduino will show exact text
-}
-
-function updateServo1() {
-  const val = parseInt(document.getElementById("servo1").value);
-  db.ref("servo1/angle").set(val);
-}
-
-function updateServo2() {
-  const val = parseInt(document.getElementById("servo2").value);
-  db.ref("servo2/angle").set(val);
+  const text = document.getElementById("lcdText").value;
+  set(ref(db, 'lcd/text'), text)
+    .then(() => console.log('lcd/text updated to', text))
+    .catch(err => console.error(err));
 }
 
 function updateStepper() {
-  const val = parseInt(document.getElementById("stepper").value);
-  db.ref("stepper/steps").set(val);
+  const steps = parseInt(document.getElementById("stepperSteps").value, 10);
+  if (!isNaN(steps)) {
+    set(ref(db, 'stepper/steps'), steps)
+      .then(() => console.log('stepper/steps updated to', steps))
+      .catch(err => console.error(err));
+  }
 }
