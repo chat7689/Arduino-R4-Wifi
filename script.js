@@ -1,7 +1,3 @@
-// Firebase imports (via CDN)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-
 // Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDXUCyz6oI23ndD03ejKuDj3_V8oK9JLvQ",
@@ -13,23 +9,44 @@ const firebaseConfig = {
   appId: "1:100197280714:web:a58b8e6a573c70bdd3bd33"
 };
 
-// Init Firebase
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-// Buttons
+// LCD
 document.getElementById("lcdBtn").addEventListener("click", () => {
   const text = document.getElementById("lcdText").value;
-  set(ref(db, "lcd/text"), text)
+  db.ref("lcd/text").set(text)
     .then(() => console.log("lcd/text updated to", text))
     .catch(console.error);
 });
 
+// Stepper
 document.getElementById("stepperBtn").addEventListener("click", () => {
   const steps = parseInt(document.getElementById("stepperSteps").value, 10);
   if (!isNaN(steps)) {
-    set(ref(db, "stepper/steps"), steps)
+    db.ref("stepper/steps").set(steps)
       .then(() => console.log("stepper/steps updated to", steps))
+      .catch(console.error);
+  }
+});
+
+// Servo 1
+document.getElementById("servo1Btn").addEventListener("click", () => {
+  const angle = parseInt(document.getElementById("servo1Angle").value, 10);
+  if (!isNaN(angle)) {
+    db.ref("servo1/angle").set(angle)
+      .then(() => console.log("servo1/angle updated to", angle))
+      .catch(console.error);
+  }
+});
+
+// Servo 2
+document.getElementById("servo2Btn").addEventListener("click", () => {
+  const angle = parseInt(document.getElementById("servo2Angle").value, 10);
+  if (!isNaN(angle)) {
+    db.ref("servo2/angle").set(angle)
+      .then(() => console.log("servo2/angle updated to", angle))
       .catch(console.error);
   }
 });
