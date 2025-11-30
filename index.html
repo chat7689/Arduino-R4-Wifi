@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Arduino Control Panel</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -10,28 +11,30 @@
 
   <div>
     <label>LCD Text:</label>
-    <input type="text" id="lcdText" placeholder="Enter text">
-    <button onclick="updateFirebase('lcd/text', lcdText.value)">Update LCD</button>
+    <input type="text" id="lcdText" placeholder="Enter text for LCD">
+    <button onclick="updateLCD()">Update LCD</button>
   </div>
 
   <div>
-    <label>Servo 1 Angle:</label>
-    <input type="number" id="servo1Angle" min="0" max="180" placeholder="0-180">
-    <button onclick="updateFirebase('servo1/angle', servo1Angle.value)">Update Servo1</button>
+    <label>Servo 1 Angle (0-180):</label>
+    <input type="number" id="servo1Angle" min="0" max="180">
+    <button onclick="updateServo1()">Update Servo 1</button>
   </div>
 
   <div>
-    <label>Servo 2 Angle:</label>
-    <input type="number" id="servo2Angle" min="0" max="180" placeholder="0-180">
-    <button onclick="updateFirebase('servo2/angle', servo2Angle.value)">Update Servo2</button>
+    <label>Servo 2 Angle (0-180):</label>
+    <input type="number" id="servo2Angle" min="0" max="180">
+    <button onclick="updateServo2()">Update Servo 2</button>
   </div>
 
   <div>
     <label>Stepper Steps:</label>
-    <input type="number" id="stepperSteps" placeholder="Enter steps">
-    <button onclick="updateFirebase('stepper/steps', stepperSteps.value)">Update Stepper</button>
+    <input type="number" id="stepperSteps">
+    <button onclick="updateStepper()">Update Stepper</button>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
