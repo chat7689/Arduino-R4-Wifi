@@ -2,25 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Arduino LCD & Stepper Control</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    input, button { margin: 5px 0; }
-    label { display: block; margin-top: 10px; }
-  </style>
+  <title>Arduino Control</title>
 </head>
 <body>
-  <h1>Arduino LCD & Stepper Control</h1>
+  <h1>Arduino LCD & Stepper</h1>
 
   <label>LCD Text:</label>
-  <input type="text" id="lcdText" placeholder="Enter text" />
+  <input type="text" id="lcdText">
   <button id="lcdBtn">Send to LCD</button>
 
   <label>Stepper Steps:</label>
-  <input type="number" id="stepperSteps" placeholder="Enter steps" />
+  <input type="number" id="stepperSteps">
   <button id="stepperBtn">Send to Stepper</button>
 
-  <!-- Mark script as module -->
+  <!-- JS module -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
