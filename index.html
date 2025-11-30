@@ -5,17 +5,35 @@
   <title>Arduino Control</title>
 </head>
 <body>
-  <h1>Arduino LCD & Stepper</h1>
+  <h1>Arduino LCD & Stepper & Servos</h1>
 
-  <label>LCD Text:</label>
-  <input type="text" id="lcdText">
-  <button id="lcdBtn">Send to LCD</button>
+  <div>
+    <label>LCD Text:</label>
+    <input type="text" id="lcdText">
+    <button id="lcdBtn">Send to LCD</button>
+  </div>
 
-  <label>Stepper Steps:</label>
-  <input type="number" id="stepperSteps">
-  <button id="stepperBtn">Send to Stepper</button>
+  <div>
+    <label>Stepper Steps:</label>
+    <input type="number" id="stepperSteps">
+    <button id="stepperBtn">Send to Stepper</button>
+  </div>
 
-  <!-- JS module -->
-  <script type="module" src="script.js"></script>
+  <div>
+    <label>Servo 1 Angle (0-180):</label>
+    <input type="number" id="servo1Angle">
+    <button id="servo1Btn">Send to Servo 1</button>
+  </div>
+
+  <div>
+    <label>Servo 2 Angle (0-180):</label>
+    <input type="number" id="servo2Angle">
+    <button id="servo2Btn">Send to Servo 2</button>
+  </div>
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
