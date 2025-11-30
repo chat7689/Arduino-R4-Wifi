@@ -14,12 +14,13 @@
 
   <label>LCD Text:</label>
   <input type="text" id="lcdText" placeholder="Enter text" />
-  <button onclick="updateLCD()">Send to LCD</button>
+  <button id="lcdBtn">Send to LCD</button>
 
   <label>Stepper Steps:</label>
   <input type="number" id="stepperSteps" placeholder="Enter steps" />
-  <button onclick="updateStepper()">Send to Stepper</button>
+  <button id="stepperBtn">Send to Stepper</button>
 
-  <script src="script.js"></script>
+  <!-- Mark script as module -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
