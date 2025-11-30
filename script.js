@@ -1,47 +1,36 @@
-// Replace with your Firebase config
+// Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  apiKey: "AIzaSyDXUCyz6oI23ndD03ejKuDj3_V8oK9JLvQ",
+  authDomain: "arduino-r4-wifi.firebaseapp.com",
   databaseURL: "https://arduino-r4-wifi-default-rtdb.firebaseio.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  projectId: "arduino-r4-wifi",
+  storageBucket: "arduino-r4-wifi.firebasestorage.app",
+  messagingSenderId: "100197280714",
+  appId: "1:100197280714:web:a58b8e6a573c70bdd3bd33",
+  measurementId: "G-35X2XRQ3WQ"
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+// Update functions
 function updateLCD() {
-  const text = document.getElementById("lcdText").value;
-  db.ref("lcd/text").set(text);
+  const val = document.getElementById("lcdText").value;
+  db.ref("lcd/text").set(val); // no quotes added, Arduino will show exact text
 }
 
 function updateServo1() {
-  const angle = parseInt(document.getElementById("servo1Angle").value);
-  db.ref("servo1/angle").set(angle);
+  const val = parseInt(document.getElementById("servo1").value);
+  db.ref("servo1/angle").set(val);
 }
 
 function updateServo2() {
-  const angle = parseInt(document.getElementById("servo2Angle").value);
-  db.ref("servo2/angle").set(angle);
+  const val = parseInt(document.getElementById("servo2").value);
+  db.ref("servo2/angle").set(val);
 }
 
 function updateStepper() {
-  const steps = parseInt(document.getElementById("stepperSteps").value);
-  db.ref("stepper/steps").set(steps);
+  const val = parseInt(document.getElementById("stepper").value);
+  db.ref("stepper/steps").set(val);
 }
-
-// Optional: listen for updates and log to console
-db.ref("lcd/text").on("value", snapshot => {
-  console.log("LCD updated to:", snapshot.val());
-});
-db.ref("servo1/angle").on("value", snapshot => {
-  console.log("Servo1 updated to:", snapshot.val());
-});
-db.ref("servo2/angle").on("value", snapshot => {
-  console.log("Servo2 updated to:", snapshot.val());
-});
-db.ref("stepper/steps").on("value", snapshot => {
-  console.log("Stepper updated to:", snapshot.val());
-});
