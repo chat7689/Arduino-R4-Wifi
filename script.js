@@ -10,43 +10,47 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 // LCD
-document.getElementById("lcdBtn").addEventListener("click", () => {
+const lcdBtn = document.getElementById("lcdBtn");
+lcdBtn.addEventListener("click", () => {
   const text = document.getElementById("lcdText").value;
   db.ref("lcd/text").set(text)
-    .then(() => console.log("lcd/text updated to", text))
+    .then(() => console.log("lcd/text updated:", text))
     .catch(console.error);
 });
 
 // Stepper
-document.getElementById("stepperBtn").addEventListener("click", () => {
+const stepperBtn = document.getElementById("stepperBtn");
+stepperBtn.addEventListener("click", () => {
   const steps = parseInt(document.getElementById("stepperSteps").value, 10);
   if (!isNaN(steps)) {
     db.ref("stepper/steps").set(steps)
-      .then(() => console.log("stepper/steps updated to", steps))
+      .then(() => console.log("stepper/steps updated:", steps))
       .catch(console.error);
   }
 });
 
 // Servo 1
-document.getElementById("servo1Btn").addEventListener("click", () => {
+const servo1Btn = document.getElementById("servo1Btn");
+servo1Btn.addEventListener("click", () => {
   const angle = parseInt(document.getElementById("servo1Angle").value, 10);
   if (!isNaN(angle)) {
     db.ref("servo1/angle").set(angle)
-      .then(() => console.log("servo1/angle updated to", angle))
+      .then(() => console.log("servo1/angle updated:", angle))
       .catch(console.error);
   }
 });
 
 // Servo 2
-document.getElementById("servo2Btn").addEventListener("click", () => {
+const servo2Btn = document.getElementById("servo2Btn");
+servo2Btn.addEventListener("click", () => {
   const angle = parseInt(document.getElementById("servo2Angle").value, 10);
   if (!isNaN(angle)) {
     db.ref("servo2/angle").set(angle)
-      .then(() => console.log("servo2/angle updated to", angle))
+      .then(() => console.log("servo2/angle updated:", angle))
       .catch(console.error);
   }
 });
