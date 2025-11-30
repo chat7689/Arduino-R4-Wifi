@@ -1,40 +1,34 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arduino Control Panel</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arduino Control</title>
+<!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 </head>
 <body>
-  <h1>Arduino Control Panel</h1>
 
-  <div>
-    <label>LCD Text:</label>
-    <input type="text" id="lcdText" placeholder="Enter text for LCD">
-    <button onclick="updateLCD()">Update LCD</button>
-  </div>
+<h1>Arduino Control Panel</h1>
 
-  <div>
-    <label>Servo 1 Angle (0-180):</label>
-    <input type="number" id="servo1Angle" min="0" max="180">
-    <button onclick="updateServo1()">Update Servo 1</button>
-  </div>
+<label>LCD Text:</label>
+<input id="lcdText" type="text">
+<button onclick="updateLCD()">Send</button>
 
-  <div>
-    <label>Servo 2 Angle (0-180):</label>
-    <input type="number" id="servo2Angle" min="0" max="180">
-    <button onclick="updateServo2()">Update Servo 2</button>
-  </div>
+<label>Servo 1:</label>
+<input id="servo1" type="number" min="0" max="180">
+<button onclick="updateServo1()">Send</button>
 
-  <div>
-    <label>Stepper Steps:</label>
-    <input type="number" id="stepperSteps">
-    <button onclick="updateStepper()">Update Stepper</button>
-  </div>
+<label>Servo 2:</label>
+<input id="servo2" type="number" min="0" max="180">
+<button onclick="updateServo2()">Send</button>
 
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <script src="script.js"></script>
+<label>Stepper Steps:</label>
+<input id="stepper" type="number">
+<button onclick="updateStepper()">Send</button>
+
+<script src="script.js"></script>
 </body>
 </html>
