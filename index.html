@@ -1,34 +1,25 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arduino Control</title>
-<!-- Firebase App (the core Firebase SDK) -->
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <meta charset="UTF-8">
+  <title>Arduino LCD & Stepper Control</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input, button { margin: 5px 0; }
+    label { display: block; margin-top: 10px; }
+  </style>
 </head>
 <body>
+  <h1>Arduino LCD & Stepper Control</h1>
 
-<h1>Arduino Control Panel</h1>
+  <label>LCD Text:</label>
+  <input type="text" id="lcdText" placeholder="Enter text" />
+  <button onclick="updateLCD()">Send to LCD</button>
 
-<label>LCD Text:</label>
-<input id="lcdText" type="text">
-<button onclick="updateLCD()">Send</button>
+  <label>Stepper Steps:</label>
+  <input type="number" id="stepperSteps" placeholder="Enter steps" />
+  <button onclick="updateStepper()">Send to Stepper</button>
 
-<label>Servo 1:</label>
-<input id="servo1" type="number" min="0" max="180">
-<button onclick="updateServo1()">Send</button>
-
-<label>Servo 2:</label>
-<input id="servo2" type="number" min="0" max="180">
-<button onclick="updateServo2()">Send</button>
-
-<label>Stepper Steps:</label>
-<input id="stepper" type="number">
-<button onclick="updateStepper()">Send</button>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
