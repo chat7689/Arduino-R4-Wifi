@@ -1,30 +1,17 @@
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyDXUCyz6oI23ndD03ejKuDj3_V8oK9JLvQ",
-  authDomain: "arduino-r4-wifi.firebaseapp.com",
-  databaseURL: "https://arduino-r4-wifi-default-rtdb.firebaseio.com",
-  projectId: "arduino-r4-wifi",
-  storageBucket: "arduino-r4-wifi.appspot.com",
-  messagingSenderId: "100197280714",
-  appId: "1:100197280714:web:a58b8e6a573c70bdd3bd33"
-};
+const FIREBASE_BASE = "https://arduino-r4-wifi-default-rtdb.firebaseio.com";
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-// Update functions
-function updateLCD(){
-  const val = document.getElementById("lcdInput").value;
-  db.ref("lcd/text").set(val);
+function updateStepper(){
+  const steps = document.getElementById("stepperInput").value;
+  fetch(`${FIREBASE_BASE}/stepper/steps.json`, {
+    method: "PUT",
+    body: JSON.stringify(parseInt(steps))
+  }).then(r => console.log("Stepper updated to", steps));
 }
 
 function updateServo(){
-  const val = parseInt(document.getElementById("servoInput").value);
-  db.ref("servo/angle").set(val);
-}
-
-function updateStepper(){
-  const val = parseInt(document.getElementById("stepperInput").value);
-  db.ref("stepper/steps").set(val);
+  const angle = document.getElementById("servoInput").value;
+  fetch(`${FIREBASE_BASE}/servo/angle.json`, {
+    method: "PUT",
+    body: JSON.stringify(parseInt(angle))
+  }).then(r => console.log("Servo updated to", angle));
 }
