@@ -1,0 +1,29 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f4f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: white;
+  padding: 30px 50px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 30px;
+}
+
+.control-group {
+  margin-bottom: 30px;
+}
+
+input[type=range] {
+  width: 100%;
+  margin-top: 10px;
+}
