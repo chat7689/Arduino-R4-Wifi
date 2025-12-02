@@ -1,30 +1,17 @@
-const FIREBASE_BASE = "https://arduino-r4-wifi-default-rtdb.firebaseio.com";
+const FIREBASE_BASE = "arduino-r4-wifi-default-rtdb.firebaseio.com";
 
-async function updateStepper() {
-  const val = document.getElementById("stepperInput").value;
-  await fetch(`${FIREBASE_BASE}/stepper/degree.json`, {
+function updateStepper() {
+  const steps = document.getElementById("stepperInput").value;
+  fetch(`https://${FIREBASE_BASE}/stepper/steps.json`, {
     method: "PUT",
-    body: val
-  });
-  document.getElementById("currentStepper").innerText = val;
+    body: JSON.stringify(parseInt(steps))
+  }).then(() => console.log("Stepper updated to", steps));
 }
 
-async function updateServo() {
-  const val = document.getElementById("servoInput").value;
-  await fetch(`${FIREBASE_BASE}/servo/angle.json`, {
+function updateServo() {
+  const angle = document.getElementById("servoInput").value;
+  fetch(`https://${FIREBASE_BASE}/servo/angle.json`, {
     method: "PUT",
-    body: val
-  });
-  document.getElementById("currentServo").innerText = val;
+    body: JSON.stringify(parseInt(angle))
+  }).then(() => console.log("Servo updated to", angle));
 }
-
-// Optional: Poll Firebase to update current values automatically
-setInterval(async () => {
-  const stepRes = await fetch(`${FIREBASE_BASE}/stepper/degree.json`);
-  const stepVal = await stepRes.text();
-  document.getElementById("currentStepper").innerText = stepVal;
-
-  const servoRes = await fetch(`${FIREBASE_BASE}/servo/angle.json`);
-  const servoVal = await servoRes.text();
-  document.getElementById("currentServo").innerText = servoVal;
-}, 1000);
