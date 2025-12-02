@@ -2,24 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arduino Motor Control</title>
+<title>Stepper & Servo Control</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="script.js" defer></script>
 </head>
 <body>
-<div class="container">
-  <h1>Arduino Motor Control</h1>
-  <div class="control">
-    <label>Servo Angle: <span id="servoVal">90</span>°</label>
-    <input type="range" min="0" max="180" value="90" id="servoSlider">
-  </div>
-  <div class="control">
-    <label>Stepper Angle: <span id="stepperVal">0</span>°</label>
-    <input type="range" min="0" max="360" value="0" id="stepperSlider">
-  </div>
+<h1>Stepper + Servo Controller</h1>
+
+<div>
+  <label>Stepper (0–360°): <span id="stepperVal">0</span>°</label>
+  <input type="range" id="stepper" min="0" max="360">
 </div>
+
+<div>
+  <label>Servo (0–180°): <span id="servoVal">0</span>°</label>
+  <input type="range" id="servo" min="0" max="180">
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
