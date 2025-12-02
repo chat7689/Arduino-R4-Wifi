@@ -1,41 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Arduino Control</title>
+<meta charset="UTF-8">
+<title>Stepper & Servo Control</title>
 </head>
 <body>
-  <h1>Arduino LCD & Stepper & Servos</h1>
+<h2>Stepper & Servo Control</h2>
 
-  <div>
-    <label>LCD Text:</label>
-    <input type="text" id="lcdText">
-    <button id="lcdBtn">Send to LCD</button>
-  </div>
+<label>Stepper Steps:</label>
+<input type="number" id="stepInput" value="100">
+<button onclick="sendStepper()">Move Stepper</button>
+<br><br>
 
-  <div>
-    <label>Stepper Steps:</label>
-    <input type="number" id="stepperSteps">
-    <button id="stepperBtn">Send to Stepper</button>
-  </div>
+<label>Servo Angle:</label>
+<input type="number" id="servoInput" value="90" min="0" max="180">
+<button onclick="sendServo()">Move Servo</button>
 
-  <div>
-    <label>Servo 1 Angle (0-180):</label>
-    <input type="number" id="servo1Angle">
-    <button id="servo1Btn">Send to Servo 1</button>
-  </div>
+<script>
+const ARDUINO_IP = "192.168.1.50"; // replace with your Arduino's WiFi IP
 
-  <div>
-    <label>Servo 2 Angle (0-180):</label>
-    <input type="number" id="servo2Angle">
-    <button id="servo2Btn">Send to Servo 2</button>
-  </div>
+function sendStepper() {
+  const steps = document.getElementById('stepInput').value;
+  fetch(`http://${ARDUINO_IP}/step?value=${steps}`)
+    .then(res => console.log('Stepper command sent:', steps))
+    .catch(err => console.error(err));
+}
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"></script>
-
-  <!-- Your custom JS -->
-  <script src="script.js"></script>
+function sendServo() {
+  const angle = document.getElementById('servoInput').value;
+  fetch(`http://${ARDUINO_IP}/servo?value=${angle}`)
+    .then(res => console.log('Servo command sent:', angle))
+    .catch(err => console.error(err));
+}
+</script>
 </body>
 </html>
