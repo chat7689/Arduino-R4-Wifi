@@ -1,42 +1,30 @@
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyDXUCyz6oI23ndD03ejKuDj3_V8oK9JLvQ",
-  authDomain: "arduino-r4-wifi.firebaseapp.com",
-  databaseURL: "https://arduino-r4-wifi-default-rtdb.firebaseio.com",
-  projectId: "arduino-r4-wifi",
-  storageBucket: "arduino-r4-wifi.firebasestorage.app",
-  messagingSenderId: "100197280714",
-  appId: "1:100197280714:web:a58b8e6a573c70bdd3bd33"
-};
+const FIREBASE_BASE = "https://arduino-r4-wifi-default-rtdb.firebaseio.com";
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+async function updateStepper() {
+  const val = document.getElementById("stepperInput").value;
+  await fetch(`${FIREBASE_BASE}/stepper/degree.json`, {
+    method: "PUT",
+    body: val
+  });
+  document.getElementById("currentStepper").innerText = val;
+}
 
-const stepperSlider = document.getElementById('stepper');
-const servoSlider = document.getElementById('servo');
-const stepperVal = document.getElementById('stepperVal');
-const servoVal = document.getElementById('servoVal');
+async function updateServo() {
+  const val = document.getElementById("servoInput").value;
+  await fetch(`${FIREBASE_BASE}/servo/angle.json`, {
+    method: "PUT",
+    body: val
+  });
+  document.getElementById("currentServo").innerText = val;
+}
 
-stepperSlider.addEventListener('input', e => {
-  const val = parseInt(e.target.value);
-  stepperVal.textContent = val;
-  db.ref('stepper/angle').set(val);
-});
+// Optional: Poll Firebase to update current values automatically
+setInterval(async () => {
+  const stepRes = await fetch(`${FIREBASE_BASE}/stepper/degree.json`);
+  const stepVal = await stepRes.text();
+  document.getElementById("currentStepper").innerText = stepVal;
 
-servoSlider.addEventListener('input', e => {
-  const val = parseInt(e.target.value);
-  servoVal.textContent = val;
-  db.ref('servo/angle').set(val);
-});
-
-// Listen for updates from Firebase (in case another client changes it)
-db.ref('stepper/angle').on('value', snapshot => {
-  const val = snapshot.val();
-  stepperVal.textContent = val;
-  stepperSlider.value = val;
-});
-db.ref('servo/angle').on('value', snapshot => {
-  const val = snapshot.val();
-  servoVal.textContent = val;
-  servoSlider.value = val;
-});
+  const servoRes = await fetch(`${FIREBASE_BASE}/servo/angle.json`);
+  const servoVal = await servoRes.text();
+  document.getElementById("currentServo").innerText = servoVal;
+}, 1000);
