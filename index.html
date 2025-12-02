@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stepper + Servo Control</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Stepper & Servo Control</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Arduino Motor Control</h1>
+  <h1>Stepper & Servo Control</h1>
 
   <div class="control">
-    <label>Stepper (0–360°): </label>
-    <input type="number" id="stepperInput" min="0" max="360" value="0">
+    <label>Stepper (0-4096 steps):</label>
+    <input type="number" id="stepperInput" min="0" max="4096" value="0">
     <button onclick="updateStepper()">Set Stepper</button>
-    <p>Current Stepper Degree: <span id="currentStepper">0</span>°</p>
   </div>
 
   <div class="control">
-    <label>Servo (0–180°): </label>
-    <input type="number" id="servoInput" min="0" max="180" value="0">
+    <label>Servo (0-180°):</label>
+    <input type="number" id="servoInput" min="0" max="180" value="90">
     <button onclick="updateServo()">Set Servo</button>
-    <p>Current Servo Angle: <span id="currentServo">0</span>°</p>
   </div>
 
   <script src="script.js"></script>
